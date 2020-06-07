@@ -78,7 +78,7 @@ class BST:
         self.size += 1
         return v
 
-    def deleteByCopying(self, x):
+    def delete_by_copying(self, x):
         a, b, pt = x.left, x.right, x.parent
         if a == None and b == None:
             if pt == None or x == self.root:
@@ -223,7 +223,7 @@ class BST:
                 suc, sp = sp, sp.parent
             return None
 
-    def rotateLeft(self, z):  # 균형이진탐색트리의 1차시 동영상 시청 필요 (height 정보 수정 필요)
+    def rotate_left(self, z):  # 균형이진탐색트리의 1차시 동영상 시청 필요 (height 정보 수정 필요)
         x = z.right
         if x == None:
             return None
@@ -261,7 +261,7 @@ class BST:
                 )
             n = n.parent
 
-    def rotateRight(self, z):  # 균형이진탐색트리의 1차시 동영상 시청 필요 (height 정보 수정 필요)
+    def rotate_right(self, z):  # 균형이진탐색트리의 1차시 동영상 시청 필요 (height 정보 수정 필요)
         x = z.left
         if x == None:
             return None
@@ -310,18 +310,18 @@ class AVL(BST):
 
     def rebalance(self, x, y, z):
         if z.right == y and y.right == x:
-            super(AVL, self).rotateLeft(z)
+            super(AVL, self).rotate_left(z)
             return y
         elif z.left == y and y.left == x:
-            super(AVL, self).rotateRight(z)
+            super(AVL, self).rotate_right(z)
             return y
         elif z.left == y and y.right == x:
-            super(AVL, self).rotateLeft(y)
-            super(AVL, self).rotateRight(z)
+            super(AVL, self).rotate_left(y)
+            super(AVL, self).rotate_right(z)
             return x
         elif y == z.right and x == y.left:
-            super(AVL, self).rotateRight(y)
-            super(AVL, self).rotateLeft(z)
+            super(AVL, self).rotate_right(y)
+            super(AVL, self).rotate_left(z)
             return x  # return the new 'top' node after rotations # z - y - x의 경우(linear vs. triangle)에 따라 회전해서 균형잡음
 
     def insert(
@@ -340,7 +340,7 @@ class AVL(BST):
         return v
 
     def delete(self, u):  # delete the node u
-        v = self.deleteByCopying(u)  # 또는 self.deleteByMerging을 호출
+        v = self.delete_by_copying(u)  # 또는 self.deleteByMerging을 호출
         f = v  # height가 변경될 수 있는 가장 깊이 있는 노드를 리턴받아 v에 저장
         z = y = x = None
         while self.root.height >= 2 and f:
