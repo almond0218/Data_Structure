@@ -198,7 +198,6 @@ class BST:
             while p.parent is not None and p.parent.left != p:
                 p = p.parent
             return p.parent
-        return None
 
     def pred(
         self, x
