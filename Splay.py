@@ -1,7 +1,7 @@
 class Node :
     def __init__(self, key):
         self.key = key
-        self.parent=self.left=self.right=None
+        self.parent = self.left = self.right = None
     def __str(self) :
         return str(self.key)
 
@@ -17,27 +17,27 @@ class BST :
             self.preorder(v.left)
             self.preorder(v.right)
     def inorder(self,v) :
-        if v:
+        if v :
             self.inorder(v.left)
             print(v.key,end=' ')
             self.inorder(v.right)
     def postorder(self,v):
-        if v:
+        if v :
             self.postorder(v.left)
             self.postorder(v.right)
             print(v.key,end=' ')
-    def find_loc(self, key):
-        if self.size ==0 : return None
+    def find_loc(self, key) :
+        if self.size == 0 : return None
         p = None
         v = self.root
         while v :
             if v.key == key : return v
             else :
-                p=v
+                p = v
                 if v.key < key : v = v.right
                 else : v = v.left
         return p
-    def search(self, key):
+    def search(self, key) :
         p = self.find_loc(key)
         if p and p.key == key : return p
         else : return None
@@ -53,86 +53,84 @@ class BST :
         #if v: self.size += 1
         self.size += 1
         return v
-    def rotateLeft(self, z):
+    def rotate_left(self, z):
         x = z.right
-        if x ==None : return None
+        if x is None : return None
         b = x.left
         x.parent = z.parent
         if z.parent :
-            if z.parent.left==z : z.parent.left=x
-            else : z.parent.right=x
+            if z.parent.left == z : z.parent.left = x
+            else : z.parent.right = x
         if x:
-            x.left=z
+            x.left = z
             z.parent = x
             z.right = b
         if b : b.parent = z
-        if z==self.root and z : self.root = x
-    def rotateRight(self, z):
+        if z == self.root and z : self.root = x
+    def rotate_right(self, z) :
         x = z.left
-        if x==None : return None
+        if x is None : return None
         b = x.right
         x.parent = z.parent
-        if z.parent:
+        if z.parent :
             if z.parent.left == z : z.parent.left = x
             else : z.parent.right = x
         if x :
-            x.right=z
+            x.right = z
             z.parent = x
             z.left = b
-        if b: b.parent =z
-        if z == self.root and z!=None: self.root = x
+        if b : b.parent = z
+        if z == self.root and z is not None: self.root = x
 
-class SplayTree(BST):
-    def splay(self, x):
+class SplayTree(BST) :
+    def splay(self, x) :
         pt = x.parent
         while pt :
-            if x.parent ==None or x ==self.root : return x
-            if pt.parent==None or pt==self.root :
-                if pt.left == x : super(SplayTree,self).rotateRight(pt)
-                else: super(SplayTree,self).rotateLeft(pt)
+            if x.parent is None or x == self.root : return x
+            if pt.parent is None or pt == self.root :
+                if pt.left == x : super(SplayTree,self).rotate_right(pt)
+                else: super(SplayTree,self).rotate_left(pt)
             elif (pt.parent.left==pt and pt.left==x) :
-                super(SplayTree,self).rotateRight(pt)
-                super(SplayTree,self).rotateRight(x.parent)
+                super(SplayTree,self).rotate_right(pt)
+                super(SplayTree,self).rotate_right(x.parent)
             elif (pt.parent.right==pt and pt.right==x) :
-                super(SplayTree,self).rotateLeft(pt)
-                super(SplayTree,self).rotateLeft(x.parent)
+                super(SplayTree,self).rotate_left(pt)
+                super(SplayTree,self).rotate_left(x.parent)
             elif (pt.parent.right==pt and pt.left==x) :
-                super(SplayTree,self).rotateRight(pt)
-                super(SplayTree,self).rotateLeft(x.parent)
+                super(SplayTree,self).rotate_right(pt)
+                super(SplayTree,self).rotate_left(x.parent)
             elif (pt.parent.left==pt and pt.right==x) :
-                super(SplayTree,self).rotateLeft(pt)
-                super(SplayTree,self).rotateRight(x.parent)
+                super(SplayTree,self).rotate_left(pt)
+                super(SplayTree,self).rotate_right(x.parent)
             pt = x.parent
         return x
-
     def search(self, key):
         v = super(SplayTree, self).search(key)
         if v : self.root = self.splay(v)
         return v
-
     def insert(self, key):
         v = super(SplayTree, self).insert(key)
         self.root = self.splay(v)
         return v
     def delete(self, x):
         v = self.splay(x)
-        l,r = v.left, v.right
+        l, r = v.left, v.right
         if l :
             m = l
             while m.right : m = m.right
             self.splay(m)
             m.right = None
-            if r : m.right,r.parent = r,m
-        elif l==None and r :
-            r.parent =None
+            if r : m.right, r.parent = r, m
+        elif l is None and r :
+            r.parent = None
             self.root = r
-        elif l==None and r==None :
-            if x==self.root : self.root = None
+        elif l is None and r is None :
+            if x == self.root : self.root = None
             else :
-                if x.parent.left ==x : x.parent.left = None
+                if x.parent.left == x : x.parent.left = None
                 else : x.parent.right = None
                 x.parent = None
-        x.left=x.right=None
+        x.left = x.right = None
         self.size -= 1
 
 T = SplayTree()
