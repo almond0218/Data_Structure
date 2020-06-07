@@ -17,7 +17,7 @@ class BST:
         return self.size
 
     def preorder(self, v):
-        if v != None:
+        if v is not None:
             print(v.key, end=" ")
             self.preorder(v.left)
             self.preorder(v.right)
@@ -71,7 +71,7 @@ class BST:
                 v.parent = p
             r = v
             if self.height(p.left) != self.height(p.right):
-                while p != None and r.height == p.height and r:
+                while p is not None and r.height == p.height and r:
                     p.height += 1
                     r = p
                     p = p.parent
@@ -80,8 +80,8 @@ class BST:
 
     def delete_by_copying(self, x):
         a, b, pt = x.left, x.right, x.parent
-        if a == None and b == None:
-            if pt == None or x == self.root:
+        if a is None and b is None:
+            if pt is None or x == self.root:
                 self.deleteByMerging(x)
                 self.size += 1
             elif pt.left == x:
@@ -102,11 +102,11 @@ class BST:
             x.parent = None
             self.size -= 1
             return pt
-        elif a == None:
+        elif a is None:
             c = m = b
             while c.left:
                 c = c.left
-            if x.parent == None or x == self.root:
+            if x.parent is None or x == self.root:
                 self.root = c
             else:
                 if x == pt.right:
@@ -137,11 +137,11 @@ class BST:
                 h = h.parent
             self.size -= 1
             return rv
-        elif a != None:
+        elif a is not None:
             c = m = a
             while c.right:
                 c = c.right
-            if x.parent == None or x == self.root:
+            if x.parent is None or x == self.root:
                 self.root = c
             else:
                 if x == pt.right:
@@ -175,27 +175,27 @@ class BST:
             return rv
 
     def height(self, x):  # 노드 x의 height 값을 리턴
-        if x == None:
+        if x is None:
             return -1
         else:
             return x.height
 
     def succ(self, x):
-        if x == None or self.size == 1:
+        if x is None or self.size == 1:
             return None
         s = self.find_loc(x.key)
-        if s.right != None:
+        if s.right is not None:
             s = s.right
-            while s.left != None:
+            while s.left is not None:
                 s = s.left
             return s
-        elif s.parent != None and s.parent.left == s:
+        elif s.parent is not None and s.parent.left == s:
             return s.parent
         else:
             p = s.parent
-            if p == None:
+            if p is None:
                 return None
-            while p.parent != None and p.parent.left != p:
+            while p.parent is not None and p.parent.left != p:
                 p = p.parent
             return p.parent
         return None
@@ -203,20 +203,20 @@ class BST:
     def pred(
         self, x
     ):  # key값의 오름차순 순서에서 x.key 값의 이전 노드(predecssor) 리턴 # x의 predecessor가 없다면 (즉, x.key가 최소값이면) None 리턴
-        if x == None or self.size == 1:
+        if x is None or self.size == 1:
             return None
         suc = self.find_loc(x.key)
-        if suc.left != None:
+        if suc.left is not None:
             suc = suc.left
-            while suc.right != None:
+            while suc.right is not None:
                 suc = suc.right
             return suc
-        elif suc.parent != None and suc.parent.right == suc:
+        elif suc.parent is not None and suc.parent.right == suc:
             return suc.parent
         else:
             sp = suc.parent
-            while suc.parent != None and sp.left == suc:
-                if sp.parent == None:
+            while suc.parent is not None and sp.left == suc:
+                if sp.parent is None:
                     return None
                 if sp.parent.right == sp:
                     return sp.parent
@@ -225,7 +225,7 @@ class BST:
 
     def rotate_left(self, z):  # 균형이진탐색트리의 1차시 동영상 시청 필요 (height 정보 수정 필요)
         x = z.right
-        if x == None:
+        if x is None:
             return None
         b = x.left
         x.parent = z.parent
@@ -240,7 +240,7 @@ class BST:
             z.right = b
             if b:
                 b.parent = z
-        if z == self.root and z != None:
+        if z == self.root and z is not None:
             self.root = x
         z.height = (
             self.height(z.left) + 1
@@ -263,7 +263,7 @@ class BST:
 
     def rotate_right(self, z):  # 균형이진탐색트리의 1차시 동영상 시청 필요 (height 정보 수정 필요)
         x = z.left
-        if x == None:
+        if x is None:
             return None
         b = x.right
         x.parent = z.parent
@@ -278,7 +278,7 @@ class BST:
             z.left = b
         if b:
             b.parent = z
-        if z == self.root and z != None:
+        if z == self.root and z is not None:
             self.root = x
         z.height = (
             self.height(z.right) + 1
@@ -330,7 +330,7 @@ class AVL(BST):
         v = super(AVL, self).insert(key)
         f = pf = ppf = v  # x, y, z를 찾아 rebalance(x, y, z)를 호출
         z = y = x = None
-        while self.root.height >= 2 and f.parent != None:
+        while self.root.height >= 2 and f.parent is not None:
             f, pf, ppf = f.parent, f, pf
             if self.bd(f) != 1 and self.bd(f) != 0 and self.bd(f) != -1:
                 z, y, x = f, pf, ppf
@@ -367,7 +367,7 @@ while True:
         print("- {0} is deleted".format(int(cmd[1])))
     elif cmd[0] == "search":
         v = T.search(int(cmd[1]))
-        if v == None:
+        if v is None:
             print("* {0} is not found!".format(cmd[1]))
         else:
             print("* {0} is found!".format(cmd[1]))
@@ -379,13 +379,13 @@ while True:
             print("= {0} has height of {1}".format(cmd[1], h))
     elif cmd[0] == "succ":
         v = T.succ(T.search(int(cmd[1])))
-        if v == None:
+        if v is None:
             print("> {0} is not found or has no successor".format(cmd[1]))
         else:
             print("> {0}'s successor is {1}".format(cmd[1], v.key))
     elif cmd[0] == "pred":
         v = T.pred(T.search(int(cmd[1])))
-        if v == None:
+        if v is None:
             print("< {0} is not found or has no predecssor".format(cmd[1]))
         else:
             print("< {0}'s predecssor is {1}".format(cmd[1], v.key))
