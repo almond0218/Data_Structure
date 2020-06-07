@@ -301,8 +301,7 @@ class BST:
 
 class AVL(BST):
     def __init__(self):
-        self.root = None
-        self.size = 0
+        super().__init__()
 
     def bd(self, n):
         return self.height(n.left) - self.height(n.right)
