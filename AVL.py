@@ -322,9 +322,8 @@ class AVL(BST):
             super(AVL, self).rotate_left(z)
             return x  # return the new 'top' node after rotations # z - y - x의 경우(linear vs. triangle)에 따라 회전해서 균형잡음
 
-    def insert(
-        self, key
-    ):  # BST에서도 같은 이름의 insert가 있으므로, BST의 insert 함수를 호출하려면 # super(class_name, instance_name).method()으로 호출
+    # BST에서도 같은 이름의 insert가 있으므로, BST의 insert 함수를 호출하려면 # super(class_name, instance_name).method()으로 호출
+    def insert(self, key):
         v = super(AVL, self).insert(key)
         f = pf = ppf = v  # x, y, z를 찾아 rebalance(x, y, z)를 호출
         z = y = x = None
