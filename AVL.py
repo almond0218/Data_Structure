@@ -346,9 +346,8 @@ class AVL(BST):
                 y = f.left if self.height(f.left) >= self.height(f.right) else f.right
                 x = y.left if self.height(y.left) >= self.height(y.right) else y.right
                 if z and y and x:
-                    self.rebalance(
-                        x, y, z
-                    )  # break# v가 AVL 높이조건을 만족하는지 보면서 루트 방향으로 이동 # z - y - x를 정한 후, rebalance(x, y, z)을 호출
+                    # break# v가 AVL 높이조건을 만족하는지 보면서 루트 방향으로 이동 # z - y - x를 정한 후, rebalance(x, y, z)을 호출
+                    self.rebalance(x, y, z)
             f = f.parent
 
 
