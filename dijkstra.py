@@ -25,20 +25,31 @@ class Dijkstra:
     def process(self):
         while self.queue:
             _, current_node = heappop(self.queue)
-            for target_node_key, target_node_distance in current_node.edges.items():
-                cost = self._relax(current_node, target_node_distance)
-                self._decrease(cost, current_node, target_node_key)
+            for target_node_key, edge_cost in current_node.edges.items():
+                current_node_distance = self._get_distance_from_key(current_node.key)
+                self._relax(
+                    current_node.key, current_node_distance, target_node_key, edge_cost
+                )
         return self.distances, self.parents
 
-    def _relax(self, current_node, target_node_distance):
-        current_distance = self.distances[current_node.key]
-        return current_distance + target_node_distance
-
-    def _decrease(self, cost, current_node, target_node_key):
-        if self.distances[target_node_key] > cost:
-            self.distances[target_node_key] = cost
-            self.parents[target_node_key] = current_node.key
+    def _relax(
+        self, current_node_key, current_node_distance, target_node_key, edge_cost
+    ):
+        target_node_distance = self._get_distance_from_key(target_node_key)
+        cost = current_node_distance + edge_cost
+        if target_node_distance > cost:
+            self._set_distance(target_node_key, cost)
+            self._set_parent(target_node_key, current_node_key)
             self._reset_queue()
+
+    def _get_distance_from_key(self, key):
+        return self.distances[key]
+
+    def _set_distance(self, key, distance):
+        self.distances[key] = distance
+
+    def _set_parent(self, key, parent_key):
+        self.parents[key] = parent_key
 
     def _reset_queue(self):
         self.queue = [(self.distances[node.key], node) for _, node in self.queue]
