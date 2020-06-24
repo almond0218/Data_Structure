@@ -57,8 +57,8 @@ class App:
 
         d = Dijkstra(nodes)
         distances, parents = d.process()
-        print('distances: {}'.format(distances))
-        print('parents: {}'.format(parents))
+        print("distances: {}".format(distances))
+        print("parents: {}".format(parents))
 
 
 App()
