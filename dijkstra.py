@@ -9,7 +9,7 @@ from typing import Union
 
 
 class Node:
-    """다익스트라 알고리즘에 사용되는 클래스다."""
+    """다익스트라 알고리즘에 사용되는 클래스"""
 
     def __init__(self, key: int):
         self.key = key
@@ -30,6 +30,8 @@ class Node:
 
 # noinspection PyTypeChecker
 class Dijkstra:
+    """다익스트라 구현 클래스"""
+
     def __init__(self, nodes: List[Node], source: int = 0):
         self.source = source
         self.distances = [0 if i == source else float("inf") for i in range(len(nodes))]
